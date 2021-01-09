@@ -1,9 +1,22 @@
+apiVersion: v1 # creating the real storage and add it to local-sc sttorag CLASS
+kind: PersistentVolume
+metadata:
+    name: ftps-pv
+spec:
+    storageClassName: local-sc
+    capacity:
+        storage: 1Gi
+    accessModes:
+        - ReadWriteOnce
+    hostPath:
+        path: "/ft_service/FTPS"
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-    name: ftps-volume
+    name: ftps-pvc
 spec:
-    storageClassName: my-ftps-vol
+    storageClassName: local-sc
     accessModes:
         - ReadWriteOnce
     resources:
@@ -24,10 +37,17 @@ spec:
             labels:
                 app: ftps-ptr
         spec:
+            volumes:
+                - name: ftps-volume
+                  persistentVolumeClaim: 
+                    claimName: ftps-pvc
             containers:
               - name: ftps-con
                 image: my-ftps
                 imagePullPolicy: Never
+                volumeMounts:
+                  - mountPath: "/home/mohamed/"
+                    name: ftps-volume
                 ports:
                     - containerPort: 21
                     - containerPort: 20
