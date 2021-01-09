@@ -29,5 +29,5 @@ spec:
     selector:
         php-ptr: php-ptr
     ports:
-        - port: 100
+        - port: 5000
           targetPort: 5000
