@@ -23,6 +23,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+    annotations:
+        metallb.universe.tf/allow-shared-ip: shared
     name: php-service
 spec:
     type: LoadBalancer

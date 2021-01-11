@@ -23,6 +23,7 @@ export NORM='\033[0m'
 # starting MINIKUBE
 export MINIKUBE_HOME=~/goinfre/
 minikube start
+eval $(minikube docker-env)
 export MKIP=$(minikube ip)
 # MINIKUBE STARTED
 
@@ -40,5 +41,12 @@ replace_ip 'MINIKUBE_IP' $MKIP './ftps/ftpsImage/vsftpd.conf'
 sh ./ftps/install.sh
 print_line 'FTPS server installed' $GREEN
 # ftps installed
+
+# installing phpmyadmin 'mohamed' '1234'
+print_line 'installing PHPMYADMIN server' $YELLOW
+sh ./mysql/install.sh
+sh ./phpmyadmin/install.sh
+print_line 'PHPMYADMIN instaled' $GREEN
+# phpmyadmin installed
 
 get_back
